@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
@@ -22,21 +23,14 @@ import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 
 public class ImageAssert {
 
-	private final ICompareResultHandler compareHandler;
-
-	public ImageAssert(ICompareResultHandler compareHandler) {
-		this.compareHandler = compareHandler;
-	}
-
-	public ImageAssert() {
-		this.compareHandler = new JUnitCompareResultHandler();
-	}
+	private ICompareResultHandler compareResultHandler = new JUnitCompareResultHandler();
+	private int dpi = 300;
 
 	private void assertImageEquals(final File expectedFile, final File actualFile,
 			final BufferedImage expected, BufferedImage actual) {
 		boolean equal = Arrays.equals(extractPixels(expected), extractPixels(actual));
 		if (!equal) {
-			compareHandler.onImageNotEqual(expectedFile, actualFile, expected, actual);
+			compareResultHandler.onImageNotEqual(expectedFile, actualFile, expected, actual);
 		}
 	}
 
@@ -108,7 +102,7 @@ public class ImageAssert {
 		}
 	}
 
-	private static File convertPdfToPng(File pdfFile) {
+	private File convertPdfToPng(File pdfFile) {
 		File destFile;
 		try {
 			String src = pdfFile.getAbsolutePath();
@@ -118,16 +112,24 @@ public class ImageAssert {
 			// "png", src, "--out", dest).start().waitFor() != 0)
 			// TODO: support sips and imagemagick
 			// TODO: split might not be necessary when using imagemagick
-			if (new ProcessBuilder("convert", "-density", "300", src, "-resize", "800x", dest)
-					.start().waitFor() != 0)
+			if (new ProcessBuilder("convert", "-density", String.valueOf(dpi), src, "-resize",
+					"800x", dest).start().waitFor() != 0)
 				throw new RuntimeException("convert pdf2png returned error");
 			destFile = new File(dest);
 			if (!destFile.exists())
-				throw new RuntimeException(dest + " not found");
+				throw new FileNotFoundException(dest + " not found");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return destFile;
+	}
+
+	public void setDpi(int dpi) {
+		this.dpi = dpi;
+	}
+
+	public void setCompareResultHandler(ICompareResultHandler compareResultHandler) {
+		this.compareResultHandler = compareResultHandler;
 	}
 
 }
