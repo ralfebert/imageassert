@@ -18,6 +18,7 @@ public class ImageAssertTest {
 	public void testImageEqual() throws Exception {
 		//TODO: toUrl vs. toStream
 		//TODO: dependency Colocated
+		//TODO: matrix
 		imageAssert.assertPdfEquals(Colocated.toURL(this, "a.pdf"), Colocated.toStream(this, "a.pdf"));
 		imageAssert.assertPdfEquals(Colocated.toURL(this, "b.pdf"), Colocated.toStream(this, "b.pdf"));
 	}
