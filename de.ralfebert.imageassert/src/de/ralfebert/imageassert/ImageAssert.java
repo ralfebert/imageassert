@@ -1,4 +1,4 @@
-package imageassert;
+package de.ralfebert.imageassert;
 
 import static org.junit.Assert.fail;
 
@@ -17,39 +17,34 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
+import de.ralfebert.imageassert.compare.IImageCompareHandler;
+import de.ralfebert.imageassert.compare.junit.JUnitImageCompareHandler;
+
 public class ImageAssert {
 
-	private static void assertImageEquals(final File expectedFile, final File actualFile,
+	private final IImageCompareHandler compareHandler;
+
+	public ImageAssert(IImageCompareHandler compareHandler) {
+		this.compareHandler = compareHandler;
+	}
+
+	public ImageAssert() {
+		this.compareHandler = new JUnitImageCompareHandler();
+	}
+
+	private void assertImageEquals(final File expectedFile, final File actualFile,
 			final BufferedImage expected, BufferedImage actual) {
 		boolean equal = Arrays.equals(extractPixels(expected), extractPixels(actual));
 		if (!equal) {
-			ImageCompareDialog imageCompareDialog = new ImageCompareDialog(expected, actual) {
-				@Override
-				protected void onApply() {
-					System.err.println("Wrote PDF to " + expectedFile);
-					try {
-						FileOutputStream out = new FileOutputStream(expectedFile);
-						IOUtils.copy(new FileInputStream(actualFile), out);
-						out.close();
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-				@Override
-				protected void onReject() {
-					fail("Expected: " + expectedFile.getName());
-				}
-			};
-			imageCompareDialog.open();
+			compareHandler.onImageNotEqual(expectedFile, actualFile, expected, actual);
 		}
 	}
 
-	private static int[] extractPixels(BufferedImage image) {
+	private int[] extractPixels(BufferedImage image) {
 		return image.getRaster().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[]) null);
 	}
 
-	public static void assertPdfEquals(URL expected, InputStream actual) {
+	public void assertPdfEquals(URL expected, InputStream actual) {
 
 		File tempDir = null;
 		try {

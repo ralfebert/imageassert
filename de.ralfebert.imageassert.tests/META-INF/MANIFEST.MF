@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: de.ralfebert.imageassert.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: de.ralfebert.imageassert,
+ de.ralfebert.rcputils.lang,
+ org.hamcrest;version="1.1.0",
+ org.junit;version="4.0.0"

@@ -1,4 +1,4 @@
-package imageassert;
+package de.ralfebert.imageassert.compare.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
