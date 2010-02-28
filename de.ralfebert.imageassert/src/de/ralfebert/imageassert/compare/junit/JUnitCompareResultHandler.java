@@ -1,18 +1,15 @@
 package de.ralfebert.imageassert.compare.junit;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import org.junit.Assert;
 
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
+import de.ralfebert.imageassert.compare.PageImage;
 
 public class JUnitCompareResultHandler implements ICompareResultHandler {
 
 	@Override
-	public void onImageNotEqual(File expectedFile, File actualFile, BufferedImage expected,
-			BufferedImage actual) {
-		Assert.fail(String.format("Expected: %s, actual: %s", expectedFile, actualFile));
+	public void onImageNotEqual(PageImage expected, PageImage actual) {
+		Assert.fail(String.format("Expected: %s, actual: %s", expected.getName(), actual.getName()));
 	}
 
 }

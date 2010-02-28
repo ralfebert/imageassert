@@ -12,13 +12,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
+import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 
 public class ImageAssert {
@@ -26,11 +25,11 @@ public class ImageAssert {
 	private ICompareResultHandler compareResultHandler = new JUnitCompareResultHandler();
 	private int dpi = 300;
 
-	private void assertImageEquals(final File expectedFile, final File actualFile,
-			final BufferedImage expected, BufferedImage actual) {
-		boolean equal = Arrays.equals(extractPixels(expected), extractPixels(actual));
+	private void assertImageEquals(PageImage expectedImage, PageImage actualImage) {
+		boolean equal = Arrays.equals(extractPixels(expectedImage.getImage()),
+				extractPixels(actualImage.getImage()));
 		if (!equal) {
-			compareResultHandler.onImageNotEqual(expectedFile, actualFile, expected, actual);
+			compareResultHandler.onImageNotEqual(expectedImage, actualImage);
 		}
 	}
 
@@ -42,6 +41,7 @@ public class ImageAssert {
 
 		File tempDir = null;
 		try {
+			// TODO: use created tmp directory, cleanup
 			tempDir = new File("/tmp/pdfassert");
 			if (tempDir.exists())
 				FileUtils.deleteDirectory(tempDir);
@@ -81,15 +81,15 @@ public class ImageAssert {
 
 				File actualPageFile = actualFiles[i];
 
-				File expectedPng = convertPdfToPng(expectedPageFile);
-				File actualPng = convertPdfToPng(actualPageFile);
+				PageImage expectedImage = convertPdfToPng(expectedPageFile);
+				PageImage actualImage = convertPdfToPng(actualPageFile);
 
-				// TODO: find a better way to do this
-				File expectedSrcFile = new File(expectedFile.getAbsolutePath().replace(
-						"/target/test-classes/", "/src/test/java/"));
+				// TODO: find a clean way to r
+				// File expectedSrcFile = new
+				// File(expectedFile.getAbsolutePath().replace(
+				// "/target/test-classes/", "/src/test/java/"));
 
-				assertImageEquals(expectedSrcFile, actualFile, ImageIO.read(expectedPng), ImageIO
-						.read(actualPng));
+				assertImageEquals(expectedImage, actualImage);
 			}
 
 			if (actualFiles.length != expectedFiles.length) {
@@ -102,8 +102,8 @@ public class ImageAssert {
 		}
 	}
 
-	private File convertPdfToPng(File pdfFile) {
-		File destFile;
+	private PageImage convertPdfToPng(File pdfFile) {
+		File imageFile;
 		try {
 			String src = pdfFile.getAbsolutePath();
 			String dest = src.replaceAll(".pdf$", ".png");
@@ -115,13 +115,13 @@ public class ImageAssert {
 			if (new ProcessBuilder("convert", "-density", String.valueOf(dpi), src, "-resize",
 					"800x", dest).start().waitFor() != 0)
 				throw new RuntimeException("convert pdf2png returned error");
-			destFile = new File(dest);
-			if (!destFile.exists())
+			imageFile = new File(dest);
+			if (!imageFile.exists())
 				throw new FileNotFoundException(dest + " not found");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return destFile;
+		return new PageImage(imageFile);
 	}
 
 	public void setDpi(int dpi) {
