@@ -17,19 +17,19 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import de.ralfebert.imageassert.compare.IImageCompareHandler;
-import de.ralfebert.imageassert.compare.junit.JUnitImageCompareHandler;
+import de.ralfebert.imageassert.compare.ICompareResultHandler;
+import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 
 public class ImageAssert {
 
-	private final IImageCompareHandler compareHandler;
+	private final ICompareResultHandler compareHandler;
 
-	public ImageAssert(IImageCompareHandler compareHandler) {
+	public ImageAssert(ICompareResultHandler compareHandler) {
 		this.compareHandler = compareHandler;
 	}
 
 	public ImageAssert() {
-		this.compareHandler = new JUnitImageCompareHandler();
+		this.compareHandler = new JUnitCompareResultHandler();
 	}
 
 	private void assertImageEquals(final File expectedFile, final File actualFile,

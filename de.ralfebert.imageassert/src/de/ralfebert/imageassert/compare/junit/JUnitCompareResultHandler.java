@@ -5,9 +5,9 @@ import java.io.File;
 
 import org.junit.Assert;
 
-import de.ralfebert.imageassert.compare.IImageCompareHandler;
+import de.ralfebert.imageassert.compare.ICompareResultHandler;
 
-public class JUnitImageCompareHandler implements IImageCompareHandler {
+public class JUnitCompareResultHandler implements ICompareResultHandler {
 
 	@Override
 	public void onImageNotEqual(File expectedFile, File actualFile, BufferedImage expected,

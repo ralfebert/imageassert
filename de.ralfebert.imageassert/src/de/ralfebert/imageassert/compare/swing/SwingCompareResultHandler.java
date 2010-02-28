@@ -9,9 +9,9 @@ import java.io.FileOutputStream;
 
 import org.apache.commons.io.IOUtils;
 
-import de.ralfebert.imageassert.compare.IImageCompareHandler;
+import de.ralfebert.imageassert.compare.ICompareResultHandler;
 
-public class SwingImageCompareHandler implements IImageCompareHandler {
+public class SwingCompareResultHandler implements ICompareResultHandler {
 
 	@Override
 	public void onImageNotEqual(final File expectedFile, final File actualFile,
