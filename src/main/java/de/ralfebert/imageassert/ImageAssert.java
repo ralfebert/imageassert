@@ -17,7 +17,7 @@ import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
-import de.ralfebert.imageassert.compare.swing.SwingCompareResultHandler;
+import de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler;
 import de.ralfebert.imageassert.utils.Pdf2Png;
 
 public class ImageAssert {
@@ -30,7 +30,7 @@ public class ImageAssert {
 
 	public ImageAssert(boolean showCompareDialog) {
 		if (showCompareDialog) {
-			compareResultHandler = new SwingCompareResultHandler();
+			compareResultHandler = new SwtCompareResultHandler();
 		}
 	}
 

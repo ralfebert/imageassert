@@ -7,8 +7,17 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.ralfebert.imageassert,
  de.ralfebert.imageassert.compare,
  de.ralfebert.imageassert.compare.junit,
- de.ralfebert.imageassert.compare.swing
+ de.ralfebert.imageassert.compare.swt
 Bundle-Vendor: Ralf Ebert
 Import-Package: org.apache.commons.io;version="1.3.0",
  org.apache.commons.io.filefilter;version="1.4.0",
- org.junit;version="3.8.0"
+ org.apache.commons.lang;version="2.4.0",
+ org.eclipse.swt,
+ org.eclipse.swt.custom,
+ org.eclipse.swt.events,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.layout,
+ org.eclipse.swt.widgets,
+ org.junit;version="4.8.1",
+ org.junit.runner;version="4.8.1",
+ org.junit.runners;version="4.8.1"

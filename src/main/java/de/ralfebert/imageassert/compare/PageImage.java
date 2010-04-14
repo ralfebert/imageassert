@@ -11,11 +11,13 @@ import de.ralfebert.commons.lang.io.RuntimeIOException;
 public class PageImage {
 
 	private final File file;
+	private final File pdfFile;
 	private BufferedImage image;
 
-	public PageImage(File file) {
+	public PageImage(File pageImageFile, File pdfFile) {
 		super();
-		this.file = file;
+		this.file = pageImageFile;
+		this.pdfFile = pdfFile;
 	}
 
 	public String getName() {
@@ -35,6 +37,10 @@ public class PageImage {
 
 	public File getFile() {
 		return file;
+	}
+
+	public File getPdfFile() {
+		return pdfFile;
 	}
 
 }

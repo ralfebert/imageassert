@@ -46,7 +46,7 @@ public class Pdf2Png {
 
 		PageImage[] pages = new PageImage[pngFiles.length];
 		for (int i = 0; i < pages.length; i++) {
-			pages[i] = new PageImage(pngFiles[i]);
+			pages[i] = new PageImage(pngFiles[i], pdf);
 		}
 
 		return pages;
