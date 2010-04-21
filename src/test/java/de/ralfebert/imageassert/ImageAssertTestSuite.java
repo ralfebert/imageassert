@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses( { Pdf2PngTest.class, ImageAssertTest.class})
+@SuiteClasses( { PdfToPageImageConverterTest.class, ImageAssertTest.class})
 public class ImageAssertTestSuite {
 
 }

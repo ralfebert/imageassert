@@ -149,9 +149,9 @@ public class ImageCompareDialog {
 	public void open() {
 		shell.open();
 		// block on open
+		Display display = shell.getDisplay();
 		while (!shell.isDisposed()) {
-			Display display = shell.getDisplay();
-			while (display.readAndDispatch()) {
+			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
 		}

@@ -18,11 +18,13 @@ import de.ralfebert.imageassert.compare.ICompareResultHandler;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 import de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler;
-import de.ralfebert.imageassert.utils.Pdf2Png;
+import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;
+import de.ralfebert.imageassert.pageimage.ImageMagickConverter;
 
 public class ImageAssert {
 
 	private ICompareResultHandler compareResultHandler = new JUnitCompareResultHandler();
+	private IPdfToPageImageConverter pageImageConverter = new ImageMagickConverter();
 
 	public ImageAssert() {
 		this(!GraphicsEnvironment.isHeadless());
@@ -73,12 +75,12 @@ public class ImageAssert {
 			}
 
 		} finally {
-			temporaryFolder.dispose();
+			// temporaryFolder.dispose();
 		}
 	}
 
 	private PageImage[] getPages(InputStream pdfStream, String pdfName, TemporaryFolder temp) {
-		Pdf2Png pdf2png = new Pdf2Png(temp);
+		pageImageConverter.setTemporaryFolder(temp);
 		File actualFile = temp.createFile(pdfName);
 		FileOutputStream output = null;
 		try {
@@ -89,11 +91,15 @@ public class ImageAssert {
 		} finally {
 			IOUtils.closeQuietly(output);
 		}
-		return pdf2png.convert(actualFile);
+		return pageImageConverter.convert(actualFile);
 	}
 
 	public void setCompareResultHandler(ICompareResultHandler compareResultHandler) {
 		this.compareResultHandler = compareResultHandler;
+	}
+
+	public void setPageImageConverter(IPdfToPageImageConverter pageImageConverter) {
+		this.pageImageConverter = pageImageConverter;
 	}
 
 }

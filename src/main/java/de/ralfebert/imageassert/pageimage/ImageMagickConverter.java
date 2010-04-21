@@ -1,42 +1,34 @@
-package de.ralfebert.imageassert.utils;
+package de.ralfebert.imageassert.pageimage;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
-import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
 import de.ralfebert.commons.lang.launch.UnixLauncher;
 import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.PageImage;
 
-public class Pdf2Png {
+public class ImageMagickConverter implements IPdfToPageImageConverter {
 
-	private final TemporaryFolder temporaryFolder;
+	private TemporaryFolder temporaryFolder;
 	private final UnixLauncher launcher = new UnixLauncher();
 	private int dpi = 150;
 
-	public Pdf2Png(TemporaryFolder temporaryFolder) {
-		super();
+	@Override
+	public void setTemporaryFolder(TemporaryFolder temporaryFolder) {
 		this.temporaryFolder = temporaryFolder;
 	}
 
+	@Override
 	public PageImage[] convert(File pdf) {
-		if (!pdf.exists()) {
-			throw new RuntimeIOException(pdf + " doesn't exist, cannot convert to png");
-		}
-
 		String src = pdf.getAbsolutePath();
 		String dest = src.replaceAll(".pdf$", ".png");
 
-		ProcessBuilder convertProcess = new ProcessBuilder("/usr/local/bin/convert", "-density",
-				String.valueOf(dpi), src, "-resize", "700x", dest);
-		// TODO: IMGASSERT-1: Workaround für OS X Environment entfernen
-		Map<String, String> env = convertProcess.environment();
-		env.put("PATH", env.get("PATH") + ":/usr/local/bin/");
+		ProcessBuilder convertProcess = new ProcessBuilder("convert", "-density", String
+				.valueOf(dpi), src, "-resize", "700x", dest);
 		launcher.launch(convertProcess);
 
 		String wildcard = FilenameUtils.getBaseName(pdf.getAbsolutePath()) + "*.png";

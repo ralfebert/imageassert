@@ -28,6 +28,9 @@ public class PageImage {
 		if (image == null) {
 			try {
 				image = ImageIO.read(file);
+				if (image == null) {
+					throw new RuntimeException("ImageIO couldn't read " + file);
+				}
 			} catch (IOException e) {
 				throw new RuntimeIOException(e);
 			}
