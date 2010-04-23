@@ -35,8 +35,8 @@ import de.ralfebert.imageassert.utils.TemporaryFolder;
  * 
  * <pre>
  * ImageAssert imageAssert = new ImageAssert();
- * imageAssert.assertPdfEquals(Colocated.toStream(this, &quot;example.pdf&quot;), new FileInputStream(
- * 		actualPdfFile));
+ * imageAssert.assertPdfEquals(SomeClass.class.getResourceAsStream("expected.pdf")),
+ * 		new FileInputStream(actualPdfFile));
  * </pre>
  * 
  * @author Ralf Ebert
