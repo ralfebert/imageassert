@@ -1,10 +1,11 @@
-package de.ralfebert.commons.lang.io;
+package de.ralfebert.imageassert.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
+
 
 
 public class Colocated {

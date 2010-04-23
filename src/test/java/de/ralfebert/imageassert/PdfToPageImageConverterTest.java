@@ -17,12 +17,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.ralfebert.commons.lang.io.Colocated;
-import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;
 import de.ralfebert.imageassert.pageimage.ImageMagickConverter;
 import de.ralfebert.imageassert.pageimage.XpdfConverter;
+import de.ralfebert.imageassert.utils.Colocated;
+import de.ralfebert.imageassert.utils.TemporaryFolder;
 
 @RunWith(Parameterized.class)
 public class PdfToPageImageConverterTest {

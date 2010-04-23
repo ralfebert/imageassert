@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.launch;
+package de.ralfebert.imageassert.utils;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
 
 /**
  * Helper class to launch unix command line tools. System out contents are

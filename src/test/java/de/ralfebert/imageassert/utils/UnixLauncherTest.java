@@ -1,11 +1,10 @@
-package de.ralfebert.commons.lang.launch;
+package de.ralfebert.imageassert.utils;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.ralfebert.commons.lang.launch.UnixLauncher;
 
 public class UnixLauncherTest {
 

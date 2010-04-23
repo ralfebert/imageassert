@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.launch;
+package de.ralfebert.imageassert.utils;
 
 import org.apache.commons.lang.StringUtils;
 

@@ -2,8 +2,8 @@ package de.ralfebert.imageassert.pageimage;
 
 import java.io.File;
 
-import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.utils.TemporaryFolder;
 
 public interface IPdfToPageImageConverter {
 

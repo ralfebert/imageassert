@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.temp;
+package de.ralfebert.imageassert.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
 
 public class TemporaryFolder {
 

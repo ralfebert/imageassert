@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.temp;
+package de.ralfebert.imageassert.utils;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import de.ralfebert.commons.lang.temp.TemporaryFolder;
 
 public class TemporaryFolderTest {
 

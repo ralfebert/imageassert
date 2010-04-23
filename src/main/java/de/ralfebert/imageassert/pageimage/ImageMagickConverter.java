@@ -7,9 +7,9 @@ import java.util.Arrays;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import de.ralfebert.commons.lang.launch.UnixLauncher;
-import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.utils.TemporaryFolder;
+import de.ralfebert.imageassert.utils.UnixLauncher;
 
 public class ImageMagickConverter implements IPdfToPageImageConverter {
 

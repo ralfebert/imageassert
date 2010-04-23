@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
+import de.ralfebert.imageassert.utils.RuntimeIOException;
 
 public class PageImage {
 

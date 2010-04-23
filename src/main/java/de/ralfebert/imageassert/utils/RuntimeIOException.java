@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.io;
+package de.ralfebert.imageassert.utils;
 
 import java.io.IOException;
 

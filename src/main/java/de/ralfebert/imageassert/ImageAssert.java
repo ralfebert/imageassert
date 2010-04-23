@@ -12,14 +12,14 @@ import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
-import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 import de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler;
 import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;
 import de.ralfebert.imageassert.pageimage.ImageMagickConverter;
+import de.ralfebert.imageassert.utils.RuntimeIOException;
+import de.ralfebert.imageassert.utils.TemporaryFolder;
 
 public class ImageAssert {
 
