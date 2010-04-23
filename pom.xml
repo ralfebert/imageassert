@@ -5,6 +5,23 @@
   <artifactId>imageassert</artifactId>
   <packaging>jar</packaging>
   <version>2.0.0</version>
+  <description>ImageAssert is a tiny Java library for comparing PDF documents in JUnit tests.</description>
+  <url>http://www.ralfebert.de/projects/imageassert/</url>
+  <licenses>
+  	<license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  	<license>
+      <name>Eclipse Public License - v 1.0</name>
+      <url>http://www.eclipse.org/legal/epl-v10.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+  	<url>scm:git:git://github.com/ralfebert/imageassert.git</url>
+  </scm>
   <name>imageassert</name>
   <dependencies>
 	<dependency>

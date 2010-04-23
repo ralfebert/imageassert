@@ -16,7 +16,6 @@ import de.ralfebert.imageassert.compare.ICompareResultHandler;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 import de.ralfebert.imageassert.compare.swing.SwingCompareResultHandler;
-import de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler;
 import de.ralfebert.imageassert.pageimage.IPdfImageSplitter;
 import de.ralfebert.imageassert.pageimage.ImageMagickSplitter;
 import de.ralfebert.imageassert.utils.RuntimeIOException;
@@ -57,14 +56,28 @@ public class ImageAssert {
 	}
 
 	private void activateCompareDialog() {
-		boolean useSWT = false;
+		boolean foundSwt = false;
 		try {
-			useSWT = (Class.forName("org.eclipse.swt.SWT") != null);
+			if (Class.forName("org.eclipse.swt.SWT") != null) {
+				Class<?> resultHandlerClass = Class
+						.forName("de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler");
+				if (resultHandlerClass != null) {
+					ICompareResultHandler handler = (ICompareResultHandler) resultHandlerClass
+							.newInstance();
+					if (handler != null) {
+						setCompareResultHandler(handler);
+						foundSwt = true;
+					}
+				}
+
+			}
 		} catch (Exception e) {
 			// ignore
 		}
-		setCompareResultHandler(useSWT ? new SwtCompareResultHandler()
-				: new SwingCompareResultHandler());
+
+		if (!foundSwt) {
+			setCompareResultHandler(new SwingCompareResultHandler());
+		}
 	}
 
 	private void assertImageEquals(PageImage expectedImage, PageImage actualImage) {
