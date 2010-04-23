@@ -6,8 +6,6 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-
-
 public class Colocated {
 
 	public static String toString(Object ownerObject, String filename) {
@@ -22,7 +20,8 @@ public class Colocated {
 		Class<?> ownerClass = ownerObject.getClass();
 		InputStream stream = ownerObject.getClass().getResourceAsStream(filename);
 		if (stream == null) {
-			throw new RuntimeIOException(String.format("%s not found in package %s", filename, ownerClass.getPackage()));
+			throw new RuntimeIOException(String.format("%s not found in package %s", filename,
+					ownerClass.getPackage()));
 		}
 		return stream;
 	}
@@ -31,7 +30,8 @@ public class Colocated {
 		Class<?> ownerClass = ownerObject.getClass();
 		URL url = ownerObject.getClass().getResource(filename);
 		if (url == null) {
-			throw new RuntimeIOException(String.format("%s not found in package %s", filename, ownerClass.getPackage()));
+			throw new RuntimeIOException(String.format("%s not found in package %s", filename,
+					ownerClass.getPackage()));
 		}
 		return url;
 	}

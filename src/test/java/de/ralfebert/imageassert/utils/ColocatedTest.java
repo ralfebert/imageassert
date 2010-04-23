@@ -9,7 +9,6 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-
 public class ColocatedTest {
 
 	private static final String TEST = "test.txt";

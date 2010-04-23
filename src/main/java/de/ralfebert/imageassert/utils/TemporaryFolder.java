@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
-
 public class TemporaryFolder {
 
 	private final static Logger log = Logger.getLogger("TemporaryFolder");
@@ -37,7 +36,8 @@ public class TemporaryFolder {
 				folder.delete();
 			}
 			if (!this.folder.mkdirs()) {
-				throw new RuntimeIOException(String.format("Temporary folder '%s' could not be created: ", folder));
+				throw new RuntimeIOException(String.format(
+						"Temporary folder '%s' could not be created: ", folder));
 			}
 			log.info("Created temporary folder " + folder);
 		}

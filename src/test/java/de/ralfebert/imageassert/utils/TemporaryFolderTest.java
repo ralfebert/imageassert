@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-
 public class TemporaryFolderTest {
 
 	@Test
@@ -23,5 +22,5 @@ public class TemporaryFolderTest {
 		folder.dispose();
 		assertFalse(file.exists());
 	}
-	
+
 }

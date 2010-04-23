@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * Helper class to launch unix command line tools. System out contents are
  * returned, if the exit code is not EXIT_SUCCESS a {@link LaunchException} is
