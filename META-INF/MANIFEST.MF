@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Image Assert
 Bundle-SymbolicName: de.ralfebert.imageassert
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.ralfebert.imageassert,
  de.ralfebert.imageassert.compare,
