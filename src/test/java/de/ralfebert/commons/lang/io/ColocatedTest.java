@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.colocated;
+package de.ralfebert.commons.lang.io;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,7 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+import de.ralfebert.commons.lang.io.Colocated;
 import de.ralfebert.commons.lang.io.RuntimeIOException;
 
 public class ColocatedTest {

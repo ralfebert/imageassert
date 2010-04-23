@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.ralfebert.commons.lang.colocated.Colocated;
+import de.ralfebert.commons.lang.io.Colocated;
 
 public class ImageAssertTest {
 

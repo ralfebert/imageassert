@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.ralfebert.commons.lang.colocated.Colocated;
+import de.ralfebert.commons.lang.io.Colocated;
 import de.ralfebert.commons.lang.temp.TemporaryFolder;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;

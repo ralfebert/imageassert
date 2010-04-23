@@ -1,4 +1,4 @@
-package de.ralfebert.commons.lang.colocated;
+package de.ralfebert.commons.lang.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +6,6 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-import de.ralfebert.commons.lang.io.RuntimeIOException;
 
 public class Colocated {
 
