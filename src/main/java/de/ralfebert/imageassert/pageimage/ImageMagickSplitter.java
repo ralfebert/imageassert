@@ -11,7 +11,7 @@ import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 import de.ralfebert.imageassert.utils.UnixLauncher;
 
-public class ImageMagickConverter implements IPdfToPageImageConverter {
+public class ImageMagickSplitter implements IPdfImageSplitter {
 
 	private TemporaryFolder temporaryFolder;
 	private final UnixLauncher launcher = new UnixLauncher();

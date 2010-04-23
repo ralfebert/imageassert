@@ -15,16 +15,15 @@ import org.apache.commons.io.IOUtils;
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
 import de.ralfebert.imageassert.compare.PageImage;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
-import de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler;
-import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;
-import de.ralfebert.imageassert.pageimage.ImageMagickConverter;
+import de.ralfebert.imageassert.pageimage.IPdfImageSplitter;
+import de.ralfebert.imageassert.pageimage.ImageMagickSplitter;
 import de.ralfebert.imageassert.utils.RuntimeIOException;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 
 public class ImageAssert {
 
 	private ICompareResultHandler compareResultHandler = new JUnitCompareResultHandler();
-	private IPdfToPageImageConverter pageImageConverter = new ImageMagickConverter();
+	private IPdfImageSplitter pdfImageSplitter = new ImageMagickSplitter();
 
 	public ImageAssert() {
 		this(!GraphicsEnvironment.isHeadless());
@@ -32,8 +31,19 @@ public class ImageAssert {
 
 	public ImageAssert(boolean showCompareDialog) {
 		if (showCompareDialog) {
-			compareResultHandler = new SwtCompareResultHandler();
+			showCompareDialog();
 		}
+	}
+
+	private void showCompareDialog() {
+		try {
+			if (Class.forName("org.eclipse.swt") != null) {
+
+			}
+		} catch (ClassNotFoundException e) {
+			// setCompareResultHandler(new SwingCompareResultHandler());
+		}
+
 	}
 
 	private void assertImageEquals(PageImage expectedImage, PageImage actualImage) {
@@ -52,8 +62,8 @@ public class ImageAssert {
 		TemporaryFolder temporaryFolder = new TemporaryFolder(this);
 
 		try {
-			PageImage[] expectedPages = getPages(expected, "expected.pdf", temporaryFolder);
-			PageImage[] actualPages = getPages(actual, "actual.pdf", temporaryFolder);
+			PageImage[] expectedPages = extractPages(expected, "expected.pdf", temporaryFolder);
+			PageImage[] actualPages = extractPages(actual, "actual.pdf", temporaryFolder);
 
 			if (expectedPages.length <= 0)
 				fail("No pages in expected PDF!");
@@ -75,12 +85,12 @@ public class ImageAssert {
 			}
 
 		} finally {
-			// temporaryFolder.dispose();
+			temporaryFolder.dispose();
 		}
 	}
 
-	private PageImage[] getPages(InputStream pdfStream, String pdfName, TemporaryFolder temp) {
-		pageImageConverter.setTemporaryFolder(temp);
+	private PageImage[] extractPages(InputStream pdfStream, String pdfName, TemporaryFolder temp) {
+		pdfImageSplitter.setTemporaryFolder(temp);
 		File actualFile = temp.createFile(pdfName);
 		FileOutputStream output = null;
 		try {
@@ -91,15 +101,15 @@ public class ImageAssert {
 		} finally {
 			IOUtils.closeQuietly(output);
 		}
-		return pageImageConverter.convert(actualFile);
+		return pdfImageSplitter.convert(actualFile);
 	}
 
 	public void setCompareResultHandler(ICompareResultHandler compareResultHandler) {
 		this.compareResultHandler = compareResultHandler;
 	}
 
-	public void setPageImageConverter(IPdfToPageImageConverter pageImageConverter) {
-		this.pageImageConverter = pageImageConverter;
+	public void setPdfImageSplitter(IPdfImageSplitter pdfImageSplitter) {
+		this.pdfImageSplitter = pdfImageSplitter;
 	}
 
 }

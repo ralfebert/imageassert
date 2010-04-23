@@ -8,7 +8,12 @@ import javax.imageio.ImageIO;
 
 import de.ralfebert.imageassert.utils.RuntimeIOException;
 
-public class PageImage {
+/**
+ * PageImage represents a single page of a PDF document as image.
+ * 
+ * @author Ralf Ebert
+ */
+public final class PageImage {
 
 	private final File file;
 	private final File pdfFile;
@@ -24,12 +29,12 @@ public class PageImage {
 		return file.getName();
 	}
 
-	public BufferedImage getImage() {
+	public synchronized BufferedImage getImage() {
 		if (image == null) {
 			try {
 				image = ImageIO.read(file);
 				if (image == null) {
-					throw new RuntimeException("ImageIO couldn't read " + file);
+					throw new RuntimeException("javax.imageio.ImageIO couldn't read " + file);
 				}
 			} catch (IOException e) {
 				throw new RuntimeIOException(e);

@@ -19,7 +19,7 @@ import de.ralfebert.imageassert.utils.UnixLauncher;
  * 
  * @author Ralf Ebert
  */
-public class XpdfConverter implements IPdfToPageImageConverter {
+public class XpdfSplitter implements IPdfImageSplitter {
 
 	private TemporaryFolder temporaryFolder;
 	private final UnixLauncher launcher = new UnixLauncher();

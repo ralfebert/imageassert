@@ -18,9 +18,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import de.ralfebert.imageassert.compare.PageImage;
-import de.ralfebert.imageassert.pageimage.IPdfToPageImageConverter;
-import de.ralfebert.imageassert.pageimage.ImageMagickConverter;
-import de.ralfebert.imageassert.pageimage.XpdfConverter;
+import de.ralfebert.imageassert.pageimage.IPdfImageSplitter;
+import de.ralfebert.imageassert.pageimage.ImageMagickSplitter;
+import de.ralfebert.imageassert.pageimage.XpdfSplitter;
 import de.ralfebert.imageassert.utils.Colocated;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 
@@ -28,17 +28,17 @@ import de.ralfebert.imageassert.utils.TemporaryFolder;
 public class PdfToPageImageConverterTest {
 
 	private TemporaryFolder tempFolder;
-	private final IPdfToPageImageConverter converter;
+	private final IPdfImageSplitter converter;
 
-	public PdfToPageImageConverterTest(IPdfToPageImageConverter converter) {
+	public PdfToPageImageConverterTest(IPdfImageSplitter converter) {
 		super();
 		this.converter = converter;
 	}
 
 	@Parameters
 	public static List<Object[]> parameters() {
-		return Arrays.asList(new Object[][] { { new ImageMagickConverter() },
-				{ new XpdfConverter() } });
+		return Arrays.asList(new Object[][] { { new ImageMagickSplitter() },
+				{ new XpdfSplitter() } });
 
 	}
 
