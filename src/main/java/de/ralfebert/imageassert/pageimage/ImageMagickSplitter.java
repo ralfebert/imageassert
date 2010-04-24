@@ -17,12 +17,10 @@ public class ImageMagickSplitter implements IPdfImageSplitter {
 	private final UnixLauncher launcher = new UnixLauncher();
 	private int dpi = 150;
 
-	@Override
 	public void setTemporaryFolder(TemporaryFolder temporaryFolder) {
 		this.temporaryFolder = temporaryFolder;
 	}
 
-	@Override
 	public PageImage[] convert(File pdf) {
 		String src = pdf.getAbsolutePath();
 		String dest = src.replaceAll(".pdf$", ".png");

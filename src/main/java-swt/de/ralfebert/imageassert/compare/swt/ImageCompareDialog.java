@@ -128,7 +128,6 @@ public class ImageCompareDialog {
 
 		shell.addDisposeListener(new DisposeListener() {
 
-			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				expectedImage.dispose();
 				actualImage.dispose();

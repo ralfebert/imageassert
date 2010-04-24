@@ -24,12 +24,10 @@ public class XpdfSplitter implements IPdfImageSplitter {
 	private TemporaryFolder temporaryFolder;
 	private final UnixLauncher launcher = new UnixLauncher();
 
-	@Override
 	public void setTemporaryFolder(TemporaryFolder temporaryFolder) {
 		this.temporaryFolder = temporaryFolder;
 	}
 
-	@Override
 	public PageImage[] convert(File pdf) {
 		String src = pdf.getAbsolutePath();
 		String dest = src.replaceAll(".pdf$", "");

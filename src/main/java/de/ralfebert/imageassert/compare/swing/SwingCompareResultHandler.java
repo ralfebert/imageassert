@@ -15,7 +15,6 @@ public class SwingCompareResultHandler implements ICompareResultHandler {
 
 	private static final Logger log = Logger.getLogger(SwingCompareResultHandler.class.getName());
 
-	@Override
 	public void onImageNotEqual(final PageImage expected, final PageImage actual) {
 		ImageCompareDialog imageCompareDialog = new ImageCompareDialog(expected.getImage(), actual
 				.getImage()) {

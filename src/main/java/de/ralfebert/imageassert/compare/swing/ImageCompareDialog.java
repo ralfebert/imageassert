@@ -50,7 +50,6 @@ public class ImageCompareDialog extends JDialog {
 		JButton applyButton = new JButton("Apply");
 		applyButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onApply();
 				applied = true;

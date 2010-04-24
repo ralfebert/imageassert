@@ -6,7 +6,6 @@ import de.ralfebert.imageassert.compare.PageImage;
 
 public class SwtCompareResultHandler implements ICompareResultHandler {
 
-	@Override
 	public void onImageNotEqual(final PageImage expected, final PageImage actual) {
 		ImageCompareDialog imageCompareDialog = new ImageCompareDialog(expected, actual) {
 

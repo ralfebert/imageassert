@@ -7,7 +7,6 @@ import de.ralfebert.imageassert.compare.PageImage;
 
 public class JUnitCompareResultHandler implements ICompareResultHandler {
 
-	@Override
 	public void onImageNotEqual(PageImage expected, PageImage actual) {
 		Assert.fail(String.format("Expected: %s, actual: %s", expected.getName(), actual.getName()));
 	}
