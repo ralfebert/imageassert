@@ -15,10 +15,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 
 public class ImageCompareDialog extends JDialog {
@@ -47,11 +49,14 @@ public class ImageCompareDialog extends JDialog {
 		JScrollPane scrollPane = new JScrollPane(panel);
 		add(scrollPane);
 
-		JButton applyButton = new JButton("Apply");
+		JButton applyButton = new JButton("Apply: Save actual PDF");
 		applyButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				onApply();
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showSaveDialog(ImageCompareDialog.this) == JFileChooser.APPROVE_OPTION) {
+					onApply(fileChooser.getSelectedFile());
+				}
 				applied = true;
 				setVisible(false);
 			}
@@ -94,13 +99,13 @@ public class ImageCompareDialog extends JDialog {
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 
-		final BufferedImage compatibleImage = config.createCompatibleImage(image.getWidth(), image
-				.getHeight(), Transparency.TRANSLUCENT);
+		final BufferedImage compatibleImage = config.createCompatibleImage(image.getWidth(),
+				image.getHeight(), Transparency.TRANSLUCENT);
 		compatibleImage.getGraphics().drawImage(image, 0, 0, null);
 		return compatibleImage;
 	}
 
-	protected void onApply() {
+	protected void onApply(File file) {
 
 	}
 
