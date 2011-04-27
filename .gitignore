@@ -5,3 +5,5 @@ nbproject/private
 bin
 .DS_Store
 target
+.classpath
+.project
