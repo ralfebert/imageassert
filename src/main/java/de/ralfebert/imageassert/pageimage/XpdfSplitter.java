@@ -7,7 +7,7 @@ import java.util.Arrays;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.compare.Page;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 import de.ralfebert.imageassert.utils.UnixLauncher;
 
@@ -28,7 +28,7 @@ public class XpdfSplitter implements IPdfImageSplitter {
 		this.temporaryFolder = temporaryFolder;
 	}
 
-	public PageImage[] convert(File pdf) {
+	public Page[] convert(File pdf) {
 		String src = pdf.getAbsolutePath();
 		String dest = src.replaceAll(".pdf$", "");
 
@@ -49,9 +49,9 @@ public class XpdfSplitter implements IPdfImageSplitter {
 
 		Arrays.sort(images);
 
-		PageImage[] pages = new PageImage[images.length];
+		Page[] pages = new Page[images.length];
 		for (int i = 0; i < pages.length; i++) {
-			pages[i] = new PageImage(images[i], pdf);
+			pages[i] = new Page(images[i], pdf);
 		}
 
 		return pages;

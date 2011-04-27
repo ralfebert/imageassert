@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
-import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.compare.Page;
 
 public class SwingCompareResultHandler implements ICompareResultHandler {
 
 	private static final Logger log = Logger.getLogger(SwingCompareResultHandler.class.getName());
 
-	public void onImageNotEqual(final PageImage expected, final PageImage actual) {
+	public void onImageNotEqual(final Page expected, final Page actual) {
 		ImageCompareDialog imageCompareDialog = new ImageCompareDialog(expected.getImage(),
 				actual.getImage()) {
 

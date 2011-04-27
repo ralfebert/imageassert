@@ -7,26 +7,28 @@ import java.util.Arrays;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.compare.Page;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 import de.ralfebert.imageassert.utils.UnixLauncher;
 
+/**
+ * Converts a PDF to separate page images by calling convert from the
+ * ImageMagick suite.
+ * 
+ * @author Ralf Ebert
+ */
 public class ImageMagickSplitter implements IPdfImageSplitter {
 
-	private TemporaryFolder temporaryFolder;
 	private final UnixLauncher launcher = new UnixLauncher();
 	private int dpi = 150;
+	private TemporaryFolder temporaryFolder;
 
-	public void setTemporaryFolder(TemporaryFolder temporaryFolder) {
-		this.temporaryFolder = temporaryFolder;
-	}
-
-	public PageImage[] convert(File pdf) {
+	public Page[] convert(File pdf) {
 		String src = pdf.getAbsolutePath();
 		String dest = src.replaceAll(".pdf$", ".png");
 
-		ProcessBuilder convertProcess = new ProcessBuilder("convert", "-density", String
-				.valueOf(dpi), src, "-resize", "700x", dest);
+		ProcessBuilder convertProcess = new ProcessBuilder("convert", "-density",
+				String.valueOf(dpi), src, "-resize", "700x", dest);
 		launcher.launch(convertProcess);
 
 		String wildcard = FilenameUtils.getBaseName(pdf.getAbsolutePath()) + "*.png";
@@ -34,9 +36,9 @@ public class ImageMagickSplitter implements IPdfImageSplitter {
 				(FilenameFilter) new WildcardFileFilter(wildcard));
 		Arrays.sort(pngFiles);
 
-		PageImage[] pages = new PageImage[pngFiles.length];
+		Page[] pages = new Page[pngFiles.length];
 		for (int i = 0; i < pages.length; i++) {
-			pages[i] = new PageImage(pngFiles[i], pdf);
+			pages[i] = new Page(pngFiles[i], pdf);
 		}
 
 		return pages;
@@ -44,6 +46,10 @@ public class ImageMagickSplitter implements IPdfImageSplitter {
 
 	public void setDpi(int dpi) {
 		this.dpi = dpi;
+	}
+
+	public void setTemporaryFolder(TemporaryFolder temporaryFolder) {
+		this.temporaryFolder = temporaryFolder;
 	}
 
 }

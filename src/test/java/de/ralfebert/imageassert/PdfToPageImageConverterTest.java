@@ -17,10 +17,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.compare.Page;
 import de.ralfebert.imageassert.pageimage.IPdfImageSplitter;
 import de.ralfebert.imageassert.pageimage.ImageMagickSplitter;
-import de.ralfebert.imageassert.pageimage.XpdfSplitter;
+import de.ralfebert.imageassert.pageimage.PdfRendererImageSplitter;
 import de.ralfebert.imageassert.utils.Colocated;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 
@@ -38,7 +38,7 @@ public class PdfToPageImageConverterTest {
 	@Parameters
 	public static List<Object[]> parameters() {
 		return Arrays.asList(new Object[][] { { new ImageMagickSplitter() },
-				{ new XpdfSplitter() } });
+				{ new PdfRendererImageSplitter() } });
 
 	}
 
@@ -57,7 +57,7 @@ public class PdfToPageImageConverterTest {
 		converter.setTemporaryFolder(tempFolder);
 		File file = tempFolder.createFile("123.pdf");
 		IOUtils.copy(Colocated.toStream(this, "123.pdf"), new FileOutputStream(file));
-		PageImage[] pages = converter.convert(file);
+		Page[] pages = converter.convert(file);
 		assertEquals("page count", 3, pages.length);
 	}
 

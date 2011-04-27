@@ -13,22 +13,23 @@ import java.util.Arrays;
 import org.apache.commons.io.IOUtils;
 
 import de.ralfebert.imageassert.compare.ICompareResultHandler;
-import de.ralfebert.imageassert.compare.PageImage;
+import de.ralfebert.imageassert.compare.Page;
 import de.ralfebert.imageassert.compare.junit.JUnitCompareResultHandler;
 import de.ralfebert.imageassert.compare.swing.SwingCompareResultHandler;
 import de.ralfebert.imageassert.pageimage.IPdfImageSplitter;
-import de.ralfebert.imageassert.pageimage.ImageMagickSplitter;
+import de.ralfebert.imageassert.pageimage.PdfRendererImageSplitter;
 import de.ralfebert.imageassert.utils.RuntimeIOException;
 import de.ralfebert.imageassert.utils.TemporaryFolder;
 
 /**
- * ImageAssert compares two PDF documents in JUnit tests. It creates images for
- * every page, by default using ImageMagick (see setPdfImageSplitter to
- * implement your own strategy). The images are compared pixel-by-pixel. A
- * compare dialog is shown, if SWT is available on the classpath using SWT,
- * otherwise using Swing. If running with '-Djava.awt.headless=true' no compare
- * dialog is shown. You can also implement your own way to show the results, see
- * setCompareResultHandler.
+ * ImageAssert compares two PDF documents in JUnit tests.
+ * 
+ * It creates images for every page, by default using the pdf-renderer library,
+ * but it can also call ImageMagick or XPDf (see setPdfImageSplitter).
+ * 
+ * The images are compared pixel-by-pixel. A Swing compare dialog is shown if
+ * not running with '-Djava.awt.headless=true'. You can also implement your own
+ * way to show the results, see setCompareResultHandler.
  * 
  * Usage example:
  * 
@@ -43,7 +44,7 @@ import de.ralfebert.imageassert.utils.TemporaryFolder;
 public class ImageAssert {
 
 	private ICompareResultHandler compareResultHandler = new JUnitCompareResultHandler();
-	private IPdfImageSplitter pdfImageSplitter = new ImageMagickSplitter();
+	private IPdfImageSplitter pdfImageSplitter = new PdfRendererImageSplitter();
 
 	public ImageAssert() {
 		this(!GraphicsEnvironment.isHeadless());
@@ -51,36 +52,11 @@ public class ImageAssert {
 
 	public ImageAssert(boolean showCompareDialog) {
 		if (showCompareDialog) {
-			activateCompareDialog();
-		}
-	}
-
-	private void activateCompareDialog() {
-		boolean foundSwt = false;
-		try {
-			if (Class.forName("org.eclipse.swt.SWT") != null) {
-				Class<?> resultHandlerClass = Class
-						.forName("de.ralfebert.imageassert.compare.swt.SwtCompareResultHandler");
-				if (resultHandlerClass != null) {
-					ICompareResultHandler handler = (ICompareResultHandler) resultHandlerClass
-							.newInstance();
-					if (handler != null) {
-						setCompareResultHandler(handler);
-						foundSwt = true;
-					}
-				}
-
-			}
-		} catch (Exception e) {
-			// ignore
-		}
-
-		if (!foundSwt) {
 			setCompareResultHandler(new SwingCompareResultHandler());
 		}
 	}
 
-	private void assertImageEquals(PageImage expectedImage, PageImage actualImage) {
+	private void assertImageEquals(Page expectedImage, Page actualImage) {
 		boolean equal = Arrays.equals(extractPixels(expectedImage.getImage()),
 				extractPixels(actualImage.getImage()));
 		if (!equal) {
@@ -96,20 +72,20 @@ public class ImageAssert {
 		TemporaryFolder temporaryFolder = new TemporaryFolder(this);
 
 		try {
-			PageImage[] expectedPages = extractPages(expected, "expected.pdf", temporaryFolder);
-			PageImage[] actualPages = extractPages(actual, "actual.pdf", temporaryFolder);
+			Page[] expectedPages = extractPages(expected, "expected.pdf", temporaryFolder);
+			Page[] actualPages = extractPages(actual, "actual.pdf", temporaryFolder);
 
 			if (expectedPages.length <= 0)
 				fail("No pages in expected PDF!");
 
 			for (int i = 0; i < expectedPages.length; i++) {
-				PageImage expectedPage = expectedPages[i];
+				Page expectedPage = expectedPages[i];
 				if (i >= actualPages.length) {
 					fail(String.format("PDF has not enough pages: was %d, expected %d",
 							actualPages.length, expectedPages.length));
 				}
 
-				PageImage actualPage = actualPages[i];
+				Page actualPage = actualPages[i];
 				assertImageEquals(expectedPage, actualPage);
 			}
 
@@ -123,7 +99,7 @@ public class ImageAssert {
 		}
 	}
 
-	private PageImage[] extractPages(InputStream pdfStream, String pdfName, TemporaryFolder temp) {
+	private Page[] extractPages(InputStream pdfStream, String pdfName, TemporaryFolder temp) {
 		pdfImageSplitter.setTemporaryFolder(temp);
 		File actualFile = temp.createFile(pdfName);
 		FileOutputStream output = null;
