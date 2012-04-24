@@ -16,7 +16,9 @@ public class TemporaryFolderTest {
 		TemporaryFolder folder = new TemporaryFolder(this);
 		File file = folder.createFile("test.txt");
 		assertNotNull(file);
-		IOUtils.write("test", new FileOutputStream(file));
+		final FileOutputStream fos = new FileOutputStream(file);
+		IOUtils.write("test", fos);
+		IOUtils.closeQuietly(fos);
 		assertTrue(file.exists());
 		assertEquals("test", IOUtils.toString(new FileInputStream(file)));
 		folder.dispose();

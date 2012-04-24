@@ -48,10 +48,23 @@ public class TemporaryFolder {
 		if (this.folder != null) {
 			try {
 				FileUtils.deleteDirectory(this.folder);
+				log.info("Disposed temporary folder " + folder);
 			} catch (IOException e) {
-				throw new RuntimeIOException(e);
+				/*
+				  This will happen on Windows when PdfRendererImageSplitter is used, since the ByteBuffer
+				  keeps a reference to the file.
+					  
+				  So garbage collect and try again... (ugly!!!)
+			  	*/
+				System.gc();
+
+				try {
+					FileUtils.deleteDirectory(this.folder);
+					log.info("Disposed temporary folder " + folder);
+				} catch (IOException e2) {
+					throw new RuntimeIOException(e); // Throw initial error
+				}
 			}
-			log.info("Disposed temporary folder " + folder);
 		}
 	}
 
