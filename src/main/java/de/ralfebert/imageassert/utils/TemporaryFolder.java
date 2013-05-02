@@ -2,6 +2,7 @@ package de.ralfebert.imageassert.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -56,7 +57,7 @@ public class TemporaryFolder {
 					  
 				  So garbage collect and try again... (ugly!!!)
 			  	*/
-				System.gc();
+				gc();
 
 				try {
 					FileUtils.deleteDirectory(this.folder);
@@ -68,4 +69,15 @@ public class TemporaryFolder {
 		}
 	}
 
+	/**
+	 * This method guarantees that garbage collection is done unlike <code>{@link System#gc()}</code>
+	 */
+	public static void gc() {
+		Object obj = new Object();
+		WeakReference ref = new WeakReference<Object>(obj);
+		obj = null;
+		while(ref.get() != null) {
+			System.gc();
+		}
+	}
 }
