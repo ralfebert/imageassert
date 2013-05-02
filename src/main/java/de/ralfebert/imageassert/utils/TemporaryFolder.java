@@ -2,6 +2,7 @@ package de.ralfebert.imageassert.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -48,11 +49,35 @@ public class TemporaryFolder {
 		if (this.folder != null) {
 			try {
 				FileUtils.deleteDirectory(this.folder);
+				log.info("Disposed temporary folder " + folder);
 			} catch (IOException e) {
-				throw new RuntimeIOException(e);
+				/*
+				  This will happen on Windows when PdfRendererImageSplitter is used, since the ByteBuffer
+				  keeps a reference to the file.
+					  
+				  So garbage collect and try again... (ugly!!!)
+			  	*/
+				gc();
+
+				try {
+					FileUtils.deleteDirectory(this.folder);
+					log.info("Disposed temporary folder " + folder);
+				} catch (IOException e2) {
+					throw new RuntimeIOException(e); // Throw initial error
+				}
 			}
-			log.info("Disposed temporary folder " + folder);
 		}
 	}
 
+	/**
+	 * This method guarantees that garbage collection is done unlike <code>{@link System#gc()}</code>
+	 */
+	public static void gc() {
+		Object obj = new Object();
+		WeakReference ref = new WeakReference<Object>(obj);
+		obj = null;
+		while(ref.get() != null) {
+			System.gc();
+		}
+	}
 }

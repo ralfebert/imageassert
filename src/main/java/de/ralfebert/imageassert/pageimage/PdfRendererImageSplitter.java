@@ -28,10 +28,11 @@ import de.ralfebert.imageassert.utils.TemporaryFolder;
 public class PdfRendererImageSplitter implements IPdfImageSplitter {
 
 	public Page[] convert(File pdf) {
+		RandomAccessFile raf = null;
 		try {
-			RandomAccessFile raf;
 			raf = new RandomAccessFile(pdf, "r");
 			FileChannel channel = raf.getChannel();
+			// NOTE! ByteBuffer will keep file from being deleted on Windows!
 			ByteBuffer buffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
 			PDFFile pdffile = new PDFFile(buffer);
 
@@ -56,6 +57,16 @@ public class PdfRendererImageSplitter implements IPdfImageSplitter {
 			return pages;
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
+		}
+		finally {
+			if(raf != null) {
+				try {
+					raf.close(); // Closes channel too
+				}
+				catch (IOException e) {
+					throw new RuntimeIOException(e);
+				}
+			}
 		}
 	}
 

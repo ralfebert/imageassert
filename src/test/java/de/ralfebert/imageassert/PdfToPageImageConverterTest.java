@@ -56,7 +56,9 @@ public class PdfToPageImageConverterTest {
 	public void testConvert() throws FileNotFoundException, IOException {
 		converter.setTemporaryFolder(tempFolder);
 		File file = tempFolder.createFile("123.pdf");
-		IOUtils.copy(Colocated.toStream(this, "123.pdf"), new FileOutputStream(file));
+		final FileOutputStream fos = new FileOutputStream(file);
+		IOUtils.copy(Colocated.toStream(this, "123.pdf"), fos);
+		IOUtils.closeQuietly(fos);
 		Page[] pages = converter.convert(file);
 		assertEquals("page count", 3, pages.length);
 	}
