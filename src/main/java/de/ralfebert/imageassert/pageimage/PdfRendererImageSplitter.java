@@ -38,7 +38,7 @@ public class PdfRendererImageSplitter implements IPdfImageSplitter {
 			Page[] pages = new Page[pdffile.getNumPages()];
 
 			for (int i = 0; i < pdffile.getNumPages(); i++) {
-				PDFPage page = pdffile.getPage(i);
+				PDFPage page = pdffile.getPage(i + 1);
 
 				Rectangle rect = new Rectangle(0, 0, (int) page.getBBox().getWidth(), (int) page
 						.getBBox().getHeight());
